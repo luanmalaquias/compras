@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+
+<body data-bs-theme="dark">
+    <div class="container">
+        <div class="row">
+            <div class="col-12 d-flex justify-content-between">
+                <a href="./index.html" class="btn">
+                    <i class="bi bi-house-fill fs-3"></i>
+                </a>
+                <a href="./pagina-banco-dados.html" class="btn">
+                    <i class="bi bi-database-fill-gear fs-3"></i>
+                </a>
+            </div>
+        </div>
+
+        <table class="table table-hover">
+            <tbody id="tabela">
+            </tbody>
+        </table>
+        <button class="btn btn-primary btn-lg rounded" style="position: fixed; bottom: 0; right: 0;" onclick="criarNovaCompra()">
+            <i class="bi bi-cart-plus-fill"></i>
+        </button>
+    </div>
+
+    <script src="script.js"></script>
+
+    <script>
+        var compras = getComprasFromSessionStorage()
+        // // TODO verificar se ja tem dados na sessão, se não tiver usa esse
+        // var compras = [
+        //     // id, data, mercado, valor total, array de itens -> id, quantidade, produto, valor unitario, valor total
+        //     // ["12/03/25", "Bem Mais", [[3, "Arroz", 4], [2, "Feijão", 4]]],
+        //     // ["07/03/25", "Bem Mais", [[3, "Arroz", 4], [2, "Feijão", 4]]],
+        //     { "data": "12/03/25", "mercado": "Bem Mais", "produtos": [{ "qtd": 3, "nome": "Arroz", "valor": 4 }, { "qtd": 2, "nome": "Feijão", "valor": 4 }] },
+        //     { "data": "07/03/25", "mercado": "Bem Mais", "produtos": [{ "qtd": 3, "nome": "Arroz", "valor": 4 }] }
+        // ]
+        // sessionStorage.setItem("compras", JSON.stringify(compras))
+    </script>
+
+    <script>
+        for (const [index, compra] of compras.entries()) {
+            let tabela = document.getElementById("tabela")
+            let tr = document.createElement('tr')
+            tr.setAttribute("onclick", `window.location.href = './pagina-compra.html?idCompra=${index}'`)
+            let td1 = document.createElement('td')
+            td1.textContent = compra['data']
+            let td2 = document.createElement('td')
+            td2.textContent = compra['mercado']
+            let td3 = document.createElement('td')
+            let total = 0
+
+            for (const item of compra['produtos']) {
+                total += item['qtd'] * item['valor']
+            }
+
+            td3.textContent = `R$ ${total.toFixed(2)}`
+            tabela.appendChild(tr)
+            tr.appendChild(td1)
+            tr.appendChild(td2)
+            tr.appendChild(td3)
+        }
+
+        function criarNovaCompra(){
+            const data = new Date().toLocaleDateString();
+            compras.push({ "data": data, "mercado": "", "produtos": [] })
+            saveComprasToSession(compras)
+            indice = (compras.length)-1
+            window.location.href = `./pagina-compra.html?idCompra=${indice}`
+        }
+
+    </script>
+
+</body>
+
+</html>

@@ -1,8 +1,8 @@
 function getComprasFromSessionStorage(){
-    let compras = JSON.parse(sessionStorage.getItem("compras")) || [];
+    let compras = JSON.parse(localStorage.getItem("compras")) || [];
     return compras;
 }
 
 function saveComprasToSession(compras){
-    sessionStorage.setItem('compras', JSON.stringify(compras))
+    localStorage.setItem('compras', JSON.stringify(compras))
 }

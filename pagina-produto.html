@@ -41,7 +41,7 @@
             </div>
             <div class="col-12 mb-1">
                 <div class="form-floating">
-                    <input class="form-control" type="text" placeholder="" id="produto" autofocus>
+                    <input class="form-control" type="text" placeholder="" id="produto">
                     <label>Produto</label>
                 </div>
             </div>
@@ -138,6 +138,12 @@
             }
             ajustarValorTotal()
         }
+
+        window.onload = function () {
+            setTimeout(function () {
+                document.getElementById("produto").focus();
+            }, 500);
+        };
 
     </script>
 </body>

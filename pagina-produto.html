@@ -41,9 +41,12 @@
             </div>
             <div class="col-12 mb-1">
                 <div class="form-floating">
-                    <input class="form-control" type="text" placeholder="" id="produto">
+                    <input class="form-control" type="text" placeholder="" id="produto" list="produtos" autocomplete="off" oninput="autoCompletarValores(this.value)">
                     <label>Produto</label>
                 </div>
+
+                <datalist id="produtos"></datalist>
+
             </div>
             <div class="col-6  mb-1">
                 <div class="form-floating">
@@ -93,6 +96,8 @@
         valorUnitario.value = produto['valor']
         valorTotal.value = (produto['qtd'] * produto['valor']).toFixed(2)
 
+        datalistProduto(compra)
+
         function salvar() {
 
             let isValidate = true
@@ -106,11 +111,10 @@
                 isValidate = false
             }
             if (!isValidate) return
-            
+
             produto['qtd'] = parseFloat(quantidade.value)
             produto['nome'] = inputProduto.value
             produto['valor'] = parseFloat(valorUnitario.value)
-            console.log(produto);
 
             saveComprasToSession(compras)
             window.location.href = `./pagina-compra.html?idCompra=${idCompra}`
@@ -135,6 +139,34 @@
             } else {
                 if (qtd.value <= 0) return
                 qtd.value--
+            }
+            ajustarValorTotal()
+        }
+
+        function datalistProduto(){
+            let datalistProdutos = document.getElementById("produtos")
+            for (const compraAll of compras) {
+                if (compraAll.mercado == compra.mercado){
+                    for (const produto of compraAll.produtos) {
+                        if (produto.nome == null) continue
+                        let optionProduto = document.createElement("option")
+                        optionProduto.value = produto.nome
+                        datalistProdutos.appendChild(optionProduto)
+                    }
+                }
+            }
+        }
+
+        function autoCompletarValores(produtoNomeParam){
+            for (const compraAll of compras) {
+                if (compraAll.mercado == compra.mercado){
+                    for (const produto of compraAll.produtos) {
+                        if (produto.nome == produtoNomeParam){
+                            document.getElementById('valorUnitario').value = produto.valor
+                            break
+                        }
+                    }
+                }
             }
             ajustarValorTotal()
         }

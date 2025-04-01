@@ -26,6 +26,9 @@
                 <a href="./pagina-todos-produtos.html" class="btn">
                     <i class="bi bi-funnel-fill fs-3"></i>
                 </a>
+                <a href="./pagina-grafico-precos.html" class="btn">
+                    <i class="bi bi-graph-up fs-3"></i>
+                </a>
                 <a href="./pagina-banco-dados.html" class="btn">
                     <i class="bi bi-database-fill-gear fs-3"></i>
                 </a>
@@ -36,7 +39,8 @@
             <tbody id="tabela">
             </tbody>
         </table>
-        <button class="btn btn-primary btn-lg rounded" style="position: fixed; bottom: 0; right: 0;" onclick="criarNovaCompra()">
+        <button class="btn btn-primary btn-lg rounded" style="position: fixed; bottom: 0; right: 0;"
+            onclick="criarNovaCompra()">
             <i class="bi bi-cart-plus-fill"></i>
         </button>
     </div>
@@ -45,13 +49,7 @@
 
     <script>
         var compras = getComprasFromSessionStorage()
-        // var compras = [
-        //     // id, data, mercado, valor total, array de itens -> id, quantidade, produto, valor unitario, valor total
-        //     // ["12/03/25", "Bem Mais", [[3, "Arroz", 4], [2, "Feijão", 4]]],
-        //     // ["07/03/25", "Bem Mais", [[3, "Arroz", 4], [2, "Feijão", 4]]],
-        //     { "data": "12/03/25", "mercado": "Bem Mais", "produtos": [{ "qtd": 3, "nome": "Arroz", "valor": 4 }, { "qtd": 2, "nome": "Feijão", "valor": 4 }] },
-        //     { "data": "07/03/25", "mercado": "Bem Mais", "produtos": [{ "qtd": 3, "nome": "Arroz", "valor": 4 }] }
-        // ]
+        
         // sessionStorage.setItem("compras", JSON.stringify(compras))
     </script>
 
@@ -78,13 +76,36 @@
             tr.appendChild(td3)
         }
 
-        function criarNovaCompra(){
+        function criarNovaCompra() {
             const data = new Date().toLocaleDateString();
             compras.push({ "data": data, "mercado": "", "produtos": [] })
             saveComprasToSession(compras)
-            indice = (compras.length)-1
+            indice = (compras.length) - 1
             window.location.href = `./pagina-compra.html?idCompra=${indice}`
         }
+
+        var dadosGrafico = [];
+
+        compras.forEach(compra => {
+            let mercado = compra.mercado;
+            let datas = [];
+
+            compra.produtos.forEach(produto => {
+                let dataIndex = datas.findIndex(d => d[0] === compra.data);
+                if (dataIndex === -1) {
+                    datas.push([compra.data, [{ nome: produto.nome, valor: produto.valor }]]);
+                } else {
+                    datas[dataIndex][1].push({ nome: produto.nome, valor: produto.valor });
+                }
+            });
+
+            let mercadoIndex = dadosGrafico.findIndex(m => m.mercado === mercado);
+            if (mercadoIndex === -1) {
+                dadosGrafico.push({ mercado, datas });
+            } else {
+                dadosGrafico[mercadoIndex].datas.push(...datas);
+            }
+        });
 
     </script>
 

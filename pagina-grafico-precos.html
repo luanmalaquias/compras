@@ -31,7 +31,7 @@
 
         <div class="row">
 
-            <div class="accordion" id="accordionExample">
+            <div class="accordion" id="accordionMercados">
 
                 <div class="accordion-item">
                     <h2 class="accordion-header">
@@ -97,36 +97,120 @@
     <script src="script.js"></script>
     <script>
         var compras = getComprasFromSessionStorage()
+        result = {}
         var mercados = []
-        var result = {}
+        var datas = []
+        
         for (const compra of compras) {
-            if (!mercados.includes(compra.mercado)) {
+            if (!(mercados.includes(compra.mercado))) {
                 mercados.push(compra.mercado)
             }
-        }
-
-        for (const mercado of mercados) {
-            for (const compra of compras) {
-                if (compra.mercado == mercado) {
-                    if (result[mercado] == null) {
-                        result[mercado] = [{ "data": compra.data, "produtos": compra.produtos }]
-                    } else {
-                        result[mercado].push({ "data": compra.data, "produtos": compra.produtos })
-                    }
-                }
+            if(!(datas.includes(compra.data))){
+                datas.push(compra.data)
             }
         }
 
-        for (const mercado of mercados) {
-            // criar um elemento novo
-            // for na compra
-            // adicionar compra no elemento
-            // console.log(result[mercado]);
-        }
 
+        for (const compra of compras) {
+            if (!(compra.mercado in result)) {
+                result[compra.mercado] = {}
+            }
+            for (const produto of compra.produtos) {
+                if (!(produto.nome in result[compra.mercado])) {
+                    result[compra.mercado][produto.nome] = {}
+                }
+                if (!(compra.data in result[compra.mercado][produto.nome])) {
+                    result[compra.mercado][produto.nome][compra.data] = 0
+                }
+                result[compra.mercado][produto.nome][compra.data] = produto.valor
+            }
+        }
+        console.log(result);
+
+        let accordion = document.getElementById("accordionMercados")
+
+
+        var result2 = []
+        for (const compra of compras) {
+            let has = false
+            for (const r2 of result2) {
+                if (r2.mercado == compra.mercado){
+                    has = true
+                }
+            }
+            if (!has){
+                result2.push({"mercado": compra.mercado, produtos:[]})
+            } else {
+                
+            }
+        }
+        console.log(result2);
         
+
+        // for (const [index, mercado] of mercados.entries()) {
+        //     // montar item
+        //     let div_accordion_item = document.createElement("div")
+        //     div_accordion_item.classList = "accordion-item"
+        //     let h2_accordion_header = document.createElement("h2")
+        //     h2_accordion_header.classList = "accordion-header"
+        //     let accordion_button = document.createElement("button")
+        //     accordion_button.classList = "accordion-button collapsed"
+        //     accordion_button.setAttribute("type", "button")
+        //     accordion_button.setAttribute("data-bs-toggle", "collapse")
+        //     accordion_button.setAttribute("data-bs-target", `#collapse${index}`)
+        //     accordion_button.setAttribute("aria-expanded", "false")
+        //     accordion_button.setAttribute("aria-controls", `collapse${index}`)
+        //     accordion_button.textContent = mercado
+        //     h2_accordion_header.appendChild(accordion_button)
+        //     div_accordion_item.appendChild(h2_accordion_header)
+
+        //     let accordion_collapse = document.createElement("div")
+        //     accordion_collapse.id = `collapse${index}`
+        //     accordion_collapse.classList ="accordion-collapse collapse"
+        //     accordion_collapse.setAttribute("data-bs-parent", "accordionExample")
+        //     let accordion_body = document.createElement("div")
+        //     accordion_body.classList ="accordion-body"
+        //     accordion_collapse.appendChild(accordion_body)
+        //     div_accordion_item.appendChild(accordion_collapse)
+
+        //     accordion.appendChild(div_accordion_item)
+
+        //     // montar a tabela
+        //     tabelaTable = document.createElement('table')
+        //     tabelaTable.classList = 'table'
+        //     tbody = document.createElement('tbody')
+        //     trCabecalho = document.createElement('tr')
+        //     tdCabecalhoVazio = document.createElement('td')
+
+        //     accordion_body.appendChild(tabelaTable)
+        //     tabelaTable.appendChild(tbody)
+        //     tbody.appendChild(trCabecalho)
+        //     trCabecalho.appendChild(tdCabecalhoVazio)
+
+        //     for (const data of datas) {
+        //         let tdData = document.createElement('td')
+        //         tdData.textContent = data
+        //         trCabecalho.appendChild(tdData)
+        //     }
+
+        // } 
+
 
     </script>
 </body>
 
 </html>
+
+{
+"Bem mais": {
+"Feijao": {
+"03/04/2025": 5
+}
+}
+}
+
+nomeproduto datatal datatal
+
+03/04/2025 04/04/2025
+Feijão 5 6
+Arroz 7

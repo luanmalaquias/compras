@@ -150,7 +150,7 @@
                     for (const produto of compraAll.produtos) {
                         if (produto.nome == null) continue
                         let optionProduto = document.createElement("option")
-                        optionProduto.value = produto.nome
+                        optionProduto.value = `${produto.nome} | ${produto.valor}`
                         datalistProdutos.appendChild(optionProduto)
                     }
                 }

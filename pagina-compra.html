@@ -19,11 +19,13 @@
 <body data-bs-theme="dark">
     <div class="container">
         <div class="row">
-            <div class="col-12 d-flex justify-content-between">
+            <div class="col-12 d-flex justify-content-between border-bottom mb-2">
                 <a href="./index.html" class="btn">
                     <i class="bi bi-house-fill fs-3"></i>
                 </a>
-                <hr>
+                <button class="btn btn-outline-success btn-lg border-0" onclick="salvar()">
+                    <i class="bi bi-floppy-fill"></i>
+                </button>
                 <button class="btn btn-outline-danger btn-lg border-0" onclick="deletarCompra()">
                     <i class="bi bi-trash-fill"></i>
                 </button>
@@ -31,20 +33,44 @@
         </div>
 
         <div class="row text-center">
+
             <div class="col-6">
-                <div class="form-floating">
-                    <input type="text" class="form-control" placeholder="" id="dataInput">
-                    <label>Data</label>
+                <input type="text" class="form-control" placeholder="Data" id="dataInput">
+            </div>
+            
+            <div class="col-6">
+                <input type="text" class="form-control" placeholder="Mercado" id="mercadoInput" list="datalist_mercados">
+                <datalist id="datalist_mercados"></datalist>
+            </div>
+            
+            <span class="mt-3" id="valorTotal">Valor total</span>
+            <hr class="my-3">
+            
+            <!-- <div class="col-12 mb-1">
+                <div class="input-group">
+                    <input class="form-control" type="text" id="input_busca" list="datalist_produtos" oninput="autoCompletarValores(this.value)">
+                    <span class="input-group-text active">
+                        <i class="bi bi-search"></i>
+                    </span>
+                    <datalist id="datalist_produtos"></datalist>
+                </div>
+            </div> -->
+
+            <div class="col-12">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Produto" id="input_produto" list="datalist_produtos" oninput="autoCompletarValores(this.value)">
+                    <datalist id="datalist_produtos"></datalist>
+                    <input class="form-control" type="number" placeholder="Valor" id="input_valor">
+                    <button class="btn btn-primary" type="button" onclick="adicionarProduto()">ADD</button>
                 </div>
             </div>
-            <div class="col-6">
-                <div class="form-floating">
-                    <input type="text" class="form-control" placeholder="" id="mercadoInput">
-                    <label>Mercado</label>
-                </div>
+
+            <hr class="my-3">
+        </div>
+
+        <div class="row">
+            <div class="col-12" id="produtos_element">
             </div>
-            <p id="valorTotal">Valor total</p>
-            <hr>
         </div>
 
         <table class="table table-hover">
@@ -54,82 +80,191 @@
 
     </div>
 
-    <div class="row" style="position: fixed; bottom: 0; right: 0;">
+    <!-- <div class="row" style="position: fixed; bottom: 0; right: 0;">
         <div class="col-12">
             <button class="btn btn-primary btn-lg rounded" onclick="adicionarProduto()">
                 <i class="bi bi-plus-lg"></i>
             </button>
-            <button class="btn btn-success btn-lg rounded" onclick="salvar()">
-                <i class="bi bi-floppy-fill"></i>
-            </button>
         </div>
-    </div>
+    </div> -->
 
 
     <script src="./script.js"></script>
 
     <script>
-        // TODO ALTERAR O INDICE DOS PRODUTOS
-
         let compras = getComprasFromSessionStorage()
         let params = new URLSearchParams(document.location.search);
         let idCompra = params.get("idCompra");
         let compra = compras[idCompra];
 
-        document.getElementById('dataInput').value = compra['data']
-        document.getElementById('mercadoInput').value = compra['mercado']
-
         let valorTotal = document.getElementById('valorTotal')
         let total = 0
 
-        for (const [index, produto] of compra['produtos'].entries()) {
-            let tabela = document.getElementById("tabela")
-            let tr = document.createElement('tr')
-            tr.setAttribute("onclick", `window.location.href = './pagina-produto.html?idCompra=${idCompra}&idProduto=${index}'`)
-            let td1 = document.createElement('td')
-            td1.textContent = produto['qtd']
-            let td2 = document.createElement('td')
-            td2.textContent = produto['nome']
-            let td3 = document.createElement('td')
-            td3.textContent = `R$ ${produto['valor'].toFixed(2)}`
-            let td4 = document.createElement('td')
-            td4.textContent = `R$ ${(produto['qtd'] * produto['valor']).toFixed(2)}`
+        function carregar_produtos(){
+            limpar_tabela_e_inputs()
 
-            tabela.appendChild(tr)
-            tr.appendChild(td1)
-            tr.appendChild(td2)
-            tr.appendChild(td3)
-            tr.appendChild(td4)
+            document.getElementById('dataInput').value = compra['data']
+            document.getElementById('mercadoInput').value = compra['mercado']
 
-            total += produto['qtd'] * produto['valor']
+            total = 0
+
+            let produtos_element = document.getElementById('produtos_element')
+            for (const [index, produto] of compra['produtos'].entries()) {
+
+                let btn_group_element = document.createElement('div')
+                btn_group_element.classList = 'btn-group w-100 mb-1'
+                btn_group_element.setAttribute('role', 'group')
+                
+
+                let btn_menos_element = document.createElement('button')
+                if (produto['qtd'] <= 0){
+                    btn_menos_element.classList = 'btn btn-danger'
+                    i_trashcan_element = document.createElement('i')
+                    i_trashcan_element.classList = 'bi bi-trash-fill'
+                    btn_menos_element.appendChild(i_trashcan_element)
+                } else {
+                    btn_menos_element.classList = 'btn btn-primary'
+                    i_dash_element = document.createElement('i')
+                    i_dash_element.classList = 'bi bi-dash'
+                    btn_menos_element.appendChild(i_dash_element)
+                }
+
+                btn_menos_element.onclick = function(){
+                    mudarQuantidade(index, '-')
+                }
+
+                let span_qtd_element = document.createElement('span')
+                span_qtd_element.classList = 'input-group-text border-0 rounded-0'
+                span_qtd_element.textContent = produto['qtd']
+                
+                let span_produto_element = document.createElement('span')
+                span_produto_element.classList = 'input-group-text border-0 rounded-0 w-75'
+                span_produto_element.textContent = produto['nome']
+                span_produto_element.onclick = function() {
+                    window.location.href = `./pagina-produto.html?idCompra=${idCompra}&idProduto=${index}`
+                }
+                
+                let span_total_element = document.createElement('span')
+                span_total_element.classList = 'input-group-text border-0 rounded-0'
+                span_total_element.textContent = `R$ ${(produto['qtd'] * produto['valor']).toFixed(2)}`
+
+                let btn_mais_element = document.createElement('button')
+                btn_mais_element.classList = 'btn btn-primary'
+                btn_mais_element.textContent = '+'
+                btn_mais_element.onclick = function(){
+                    mudarQuantidade(index, '+')
+                }
+
+                btn_group_element.appendChild(btn_menos_element)
+                btn_group_element.appendChild(span_qtd_element)
+                btn_group_element.appendChild(span_produto_element)
+                btn_group_element.appendChild(span_total_element)
+                btn_group_element.appendChild(btn_mais_element)
+                produtos_element.appendChild(btn_group_element)
+
+                total += produto['qtd'] * produto['valor']
+
+            }
+            document.getElementById('valorTotal').textContent = `Total: R$ ${total.toFixed(2)}`
+            popular_datalists()
         }
-        document.getElementById('valorTotal').textContent = `Total: R$ ${total.toFixed(2)}`
 
+        function limpar_tabela_e_inputs(){
+            let produtos_element = document.getElementById('produtos_element')
+            produtos_element.textContent = ''
+            for (const element of document.getElementsByTagName('input')) {
+                element.value = ''
+            }
+        }
+
+        // TODO ALTERAR O INDICE DOS PRODUTOS
 
         function adicionarProduto() {
             let produto = {
                 "qtd": 1,
-                "nome": null,
-                "valor": 0,
+                "nome": document.getElementById('input_produto').value,
+                "valor": document.getElementById('input_valor').value,
             }
             compra['produtos'].push(produto)
             saveComprasToSession(compras)
-            indice = (compra['produtos'].length)-1
-            window.location.href = `./pagina-produto.html?idCompra=${idCompra}&idProduto=${indice}`
+            carregar_produtos()
+            // indice = (compra['produtos'].length) - 1
+            // window.location.href = `./pagina-produto.html?idCompra=${idCompra}&idProduto=${indice}`
         }
 
-        function deletarCompra(){
+        function deletarCompra() {
             compras.splice(idCompra, 1)
             saveComprasToSession(compras)
             window.location.href = `./index.html`
         }
 
-        function salvar(){
+        function salvar() {
             compra['data'] = document.getElementById('dataInput').value
             compra['mercado'] = document.getElementById('mercadoInput').value
             saveComprasToSession(compras)
-            window.location.href = `./index.html`
+            carregar_produtos()
+            // window.location.href = `./index.html`
         }
+
+        function mudarQuantidade(id_produto, sinal) {
+            if (sinal == '+'){
+                compra['produtos'][id_produto]['qtd']++
+            } else {
+                if (compra['produtos'][id_produto]['qtd'] <= 0){
+                    compra['produtos'].splice(id_produto, 1)
+                } else {
+                    compra['produtos'][id_produto]['qtd']--
+                }
+            }
+
+            saveComprasToSession(compras)
+            carregar_produtos()
+        }
+
+        function popular_datalists(){
+            let datalist_mercados = document.getElementById("datalist_mercados")
+            let list_mercados = []
+            for (const compra of compras) {
+                if (compra.mercado == null) continue
+                if (list_mercados.includes(compra.mercado)) continue
+                let option_mercado = document.createElement("option")
+                option_mercado.value = compra.mercado
+                datalist_mercados.appendChild(option_mercado)
+                list_mercados.push(compra.mercado)
+            }
+
+            let datalist_produtos = document.getElementById("datalist_produtos")
+            for (const compraAll of compras) {
+                if (compraAll.mercado == compra.mercado){
+                    for (const produto of compraAll.produtos) {
+                        if (produto.nome == null) continue
+                        let option_produto = document.createElement("option")
+                        option_produto.value = produto.nome
+                        datalist_produtos.appendChild(option_produto)
+                    }
+                }
+            }
+        }
+
+        function autoCompletarValores(produtoNomeParam){
+            // console.log(produtoNomeParam);
+            
+            for (const compraAll of compras) {
+                if (compraAll.mercado == compra.mercado){
+                    for (const produto of compraAll.produtos) {
+                        if (produto.nome == produtoNomeParam){
+                            // document.getElementById('input_produto').value = produto.nome
+                            document.getElementById('input_valor').value = produto.valor
+                            break
+                        }
+                    }
+                }
+            }
+
+            // document.getElementById('input_busca').value = ''
+        }
+
+        carregar_produtos()
 
     </script>
 </body>

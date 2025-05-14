@@ -138,8 +138,8 @@
                 span_qtd_element.textContent = produto['qtd']
                 
                 let span_produto_element = document.createElement('span')
-                span_produto_element.classList = 'input-group-text border-0 rounded-0 w-75'
-                span_produto_element.textContent = produto['nome']
+                span_produto_element.classList = 'input-group-text text-start border-0 rounded-0 w-75'
+                span_produto_element.innerHTML = `${produto['nome']}<br>R$ ${(produto['qtd'] * produto['valor']).toFixed(2)}`//.substring(0, 10)
                 span_produto_element.onclick = function() {
                     window.location.href = `./pagina-produto.html?idCompra=${idCompra}&idProduto=${index}`
                 }
@@ -158,7 +158,7 @@
                 btn_group_element.appendChild(btn_menos_element)
                 btn_group_element.appendChild(span_qtd_element)
                 btn_group_element.appendChild(span_produto_element)
-                btn_group_element.appendChild(span_total_element)
+                // btn_group_element.appendChild(span_total_element)
                 btn_group_element.appendChild(btn_mais_element)
                 produtos_element.appendChild(btn_group_element)
 

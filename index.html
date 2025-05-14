@@ -18,7 +18,7 @@
 
 <body data-bs-theme="dark">
     <div class="container">
-        <div class="row border-bottom">
+        <div class="row border-bottom mb-1">
             <div class="col-12 d-flex justify-content-between ">
                 <a href="./index.html" class="btn">
                     <i class="bi bi-house-fill fs-3"></i>
@@ -35,7 +35,12 @@
             </div>
         </div>
 
-        <table class="table table-hover">
+        <!-- <div class="row 2-100">
+            <div class="col-12 w-100" id="compras_element">
+            </div>
+        </div> -->
+
+        <table class="table table-hover table-borderless" style="border-collapse:separate; border-spacing: 0 0.3em">
             <tbody id="tabela">
             </tbody>
         </table>
@@ -49,28 +54,51 @@
 
     <script>
         var compras = getComprasFromSessionStorage()
-        
+
         // sessionStorage.setItem("compras", JSON.stringify(compras))
         // console.log(compras);
     </script>
 
     <script>
+        var compras_element = document.getElementById('compras_element')
+        
         for (const [index, compra] of compras.entries()) {
-            let tabela = document.getElementById("tabela")
-            let tr = document.createElement('tr')
-            tr.setAttribute("onclick", `window.location.href = './pagina-compra.html?idCompra=${index}'`)
-            let td1 = document.createElement('td')
-            td1.textContent = compra['data']
-            let td2 = document.createElement('td')
-            td2.textContent = compra['mercado']
-            let td3 = document.createElement('td')
-            let total = 0
+            // let div_btn_group = document.createElement('div')
+            // div_btn_group.classList = 'btn-group w-100 mb-1'
+            // let btn_data = document.createElement('button')
+            // btn_data.classList = 'btn btn-primary'
+            // btn_data.textContent = compra['data']
+            // let btn_mercado = document.createElement('button')
+            // btn_mercado.classList = 'btn btn-primary text-start'
+            // btn_mercado.textContent = compra['mercado']
 
+            let total = 0
             for (const item of compra['produtos']) {
                 total += item['qtd'] * item['valor']
             }
 
+            // let btn_total = document.createElement('button')
+            // btn_total.classList = 'btn btn-primary'
+            // btn_total.textContent = `R$ ${total.toFixed(2)}`
+
+            // div_btn_group.appendChild(btn_data)
+            // div_btn_group.appendChild(btn_mercado)
+            // div_btn_group.appendChild(btn_total)
+            // compras_element.appendChild(div_btn_group)
+
+            let tabela = document.getElementById("tabela")
+            let tr = document.createElement('tr')
+            tr.setAttribute("onclick", `window.location.href = './pagina-compra.html?idCompra=${index}'`)
+            let td1 = document.createElement('td')
+            td1.classList = 'bg-primary rounded-start'
+            td1.textContent = compra['data']
+            let td2 = document.createElement('td')
+            td2.classList = 'bg-primary'
+            td2.textContent = compra['mercado']
+            let td3 = document.createElement('td')
+            td3.classList = 'bg-primary rounded-end'
             td3.textContent = `R$ ${total.toFixed(2)}`
+
             tabela.appendChild(tr)
             tr.appendChild(td1)
             tr.appendChild(td2)

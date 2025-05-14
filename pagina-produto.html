@@ -33,12 +33,19 @@
 
         <div class="row">
             <div class="col-12 mb-1">
+
                 <div class="input-group">
-                    <button class="btn btn-outline-secondary" onclick="mudarQuantidade('-')">-</button>
-                            <input class="form-control" type="number" placeholder="Quantidade" id="quantidade" oninput="ajustarValorTotal()">
-                            <button class="btn btn-outline-secondary" onclick="mudarQuantidade('+')">+</button>
+                    <button class="btn btn-primary" onclick="mudarQuantidade('-')">
+                        <i class="bi bi-dash"></i>
+                    </button>
+                    <input class="form-control" type="number" placeholder="Quantidade" id="quantidade" oninput="ajustarValorTotal()">
+                    <button class="btn btn-primary" onclick="mudarQuantidade('+')">
+                        <i class="bi bi-plus"></i>
+                    </button>
                 </div>
+
             </div>
+
             <div class="col-12 mb-1">
                 <div class="form-floating">
                     <input class="form-control" type="text" placeholder="" id="produto" list="produtos" autocomplete="off" oninput="autoCompletarValores(this.value)">
@@ -46,8 +53,8 @@
                 </div>
 
                 <datalist id="produtos"></datalist>
-
             </div>
+
             <div class="col-6  mb-1">
                 <div class="form-floating">
                     <input class="form-control" type="number" placeholder="" id="valorUnitario"
@@ -55,12 +62,14 @@
                     <label>Valor unitário (R$)</label>
                 </div>
             </div>
+
             <div class="col-6  mb-1">
                 <div class="form-floating">
                     <input class="form-control" type="number" placeholder="" disabled id="valorTotal">
                     <label>Valor total (R$)</label>
                 </div>
             </div>
+            
         </div>
 
         <div class="row">

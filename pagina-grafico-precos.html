@@ -14,9 +14,15 @@
         crossorigin="anonymous"></script>
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
 </head>
 
 <body data-bs-theme="dark">
+    <h2>Variação de Preço dos Produtos</h2>
+    <div id="grafico" style="width:100%; height:400px;"></div>
+
     <div class="container">
         <div class="row">
             <div class="col-12 d-flex justify-content-between">
@@ -93,6 +99,83 @@
 
         </div>
     </div>
+
+    <script>
+        const resultado = [{
+            "mercado": "Carrefour",
+            "dados": [
+                {
+                    "produto": "Arroz",
+                    "variacaoData": ["01-01-2025", "02-01-2025"],
+                    "variacaoPreco": [10, 15]
+                },
+                {
+                    "produto": "Feijao",
+                    "variacaoData": ["01-01-2025", "03-01-2025"],
+                    "variacaoPreco": [7, 8]
+                },
+                {
+                    "produto": "Macarrao",
+                    "variacaoData": ["02-01-2025"],
+                    "variacaoPreco": [2]
+                }
+            ]
+        }];
+
+        const dados = resultado[0].dados;
+
+        // Pega todas as datas únicas em ordem crescente
+        const todasDatas = Array.from(new Set(dados.flatMap(p => p.variacaoData))).sort((a, b) => {
+            const [d1, m1, y1] = a.split("-").map(Number);
+            const [d2, m2, y2] = b.split("-").map(Number);
+            return new Date(y1, m1 - 1, d1) - new Date(y2, m2 - 1, d2);
+        });
+
+        // Cria as séries para o gráfico
+        const series = dados.map(produto => {
+            const dataMap = {};
+            produto.variacaoData.forEach((data, i) => {
+                dataMap[data] = produto.variacaoPreco[i];
+            });
+
+            const data = todasDatas.map(data => {
+                return dataMap[data] !== undefined ? dataMap[data] : null;
+            });
+            
+
+            return {
+                name: produto.produto,
+                data: data,
+                connectNulls: true
+            };
+        });
+
+        // Cria o gráfico com Highcharts
+        Highcharts.chart('grafico', {
+            chart: {
+                type: 'line'
+            },
+            title: {
+                text: 'Variação de Preços dos Produtos'
+            },
+            xAxis: {
+                categories: todasDatas,
+                title: {
+                    text: 'Data'
+                }
+            },
+            yAxis: {
+                title: {
+                    text: 'Preço (R$)'
+                }
+            },
+            tooltip: {
+                shared: true,
+                valuePrefix: 'R$ '
+            },
+            series: series
+        });
+    </script>
 
     <script src="script.js"></script>
     <script>
@@ -197,20 +280,64 @@
 
 
     </script>
+
+    <script>
+        const dadosOriginais = [
+    {
+        "mercado": "Carrefour",
+        "data": "2025-01-01",
+        "produtos": [
+            { "nome": "Arroz", "preco": 10, "qtd": 2 },
+            { "nome": "Feijao", "preco": 7, "qtd": 2 }
+        ]
+    },
+    {
+        "mercado": "Carrefour",
+        "data": "2025-01-02",
+        "produtos": [
+            { "nome": "Arroz", "preco": 15, "qtd": 2 },
+            { "nome": "Macarrao", "preco": 2, "qtd": 2 }
+        ]
+    },
+    {
+        "mercado": "Carrefour",
+        "data": "2025-01-03",
+        "produtos": [
+            { "nome": "Feijao", "preco": 8, "qtd": 2 }
+        ]
+    }
+];
+
+// Mapa para organizar os dados por produto
+const produtosMap = {};
+
+for (const entrada of dadosOriginais) {
+    const dataFormatada = entrada.data.split("-").reverse().join("-"); // "yyyy-mm-dd" => "dd-mm-yyyy"
+    
+    for (const produto of entrada.produtos) {
+        const nome = produto.nome;
+        if (!produtosMap[nome]) {
+            produtosMap[nome] = {
+                produto: nome,
+                variacaoData: [],
+                variacaoPreco: []
+            };
+        }
+        produtosMap[nome].variacaoData.push(dataFormatada);
+        produtosMap[nome].variacaoPreco.push(produto.preco);
+    }
+}
+
+// Resultado final
+const resultado = [
+    {
+        mercado: "Carrefour",
+        dados: Object.values(produtosMap)
+    }
+];
+console.log('resultado')
+console.log(resultado);
+    </script>
 </body>
 
 </html>
-
-{
-"Bem mais": {
-"Feijao": {
-"03/04/2025": 5
-}
-}
-}
-
-nomeproduto datatal datatal
-
-03/04/2025 04/04/2025
-Feijão 5 6
-Arroz 7

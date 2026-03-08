@@ -1,0 +1,271 @@
+[
+    {
+        "data": "2026-02-28 16:01:59",
+        "mercado": "MEGA ATACAREJO - VALENTINA",
+        "chave_acesso": "25260240709574000158652550001239091086475678",
+        "produtos": [
+            {
+                "qtd": 3,
+                "nome": "LEITE UHT NATVILLE 1L INT",
+                "valor": 5.22
+            },
+            {
+                "qtd": 1,
+                "nome": "FEIJAO CARIOCA KICALDO 1kg",
+                "valor": 9.99
+            },
+            {
+                "qtd": 1,
+                "nome": "SUCO INT TRADINE PET 1,35L UVA",
+                "valor": 12.99
+            },
+            {
+                "qtd": 1.165,
+                "nome": "LARANJA PERA kg",
+                "valor": 2.592274678111588
+            },
+            {
+                "qtd": 0.86,
+                "nome": "BETERRABA kg",
+                "valor": 7.488372093023257
+            },
+            {
+                "qtd": 0.402,
+                "nome": "PAO HAMBURGUER DA CASA kg",
+                "valor": 15.995024875621889
+            },
+            {
+                "qtd": 1,
+                "nome": "OVOS VERM AVINE GD OMEGA C 10",
+                "valor": 9.29
+            },
+            {
+                "qtd": 4,
+                "nome": "STEAK PERDIGAO 100G FGO",
+                "valor": 1.99
+            },
+            {
+                "qtd": 2,
+                "nome": "HAMBURGUER PERDIGAO 56G BOV",
+                "valor": 1.49
+            },
+            {
+                "qtd": 1,
+                "nome": "COXA FGO SADIA PCT 1kg",
+                "valor": 13.79
+            },
+            {
+                "qtd": 0.198,
+                "nome": "QUEIJO CHEDDAR kg",
+                "valor": 54.89898989898989
+            },
+            {
+                "qtd": 1,
+                "nome": "LEITE CONDENS PIRACANJUBA TP 395G",
+                "valor": 6.59
+            },
+            {
+                "qtd": 1,
+                "nome": "CR LEITE CAMPONESA TP 200G",
+                "valor": 3.29
+            },
+            {
+                "qtd": 1,
+                "nome": "BEB ISOT POWERADE PET 500ML MOUNTAIN BLAST",
+                "valor": 5.49
+            },
+            {
+                "qtd": 1,
+                "nome": "BISC RECH TRELOSO 120G CHOCOR BAUN",
+                "valor": 1.99
+            },
+            {
+                "qtd": 1,
+                "nome": "BISC RECH TRELOSO 120G BEM CASADO",
+                "valor": 1.99
+            },
+            {
+                "qtd": 1,
+                "nome": "BISC RECH TRELOSO 120G CHOCOLATE",
+                "valor": 1.99
+            },
+            {
+                "qtd": 1,
+                "nome": "BISC RECH OREO 90G CHOC",
+                "valor": 4.29
+            },
+            {
+                "qtd": 2,
+                "nome": "MASSA GALO 400G COMUM ESPAGUETE",
+                "valor": 2.19
+            },
+            {
+                "qtd": 1,
+                "nome": "GELATINA DR OETKER 20G MARACUJA",
+                "valor": 2.09
+            },
+            {
+                "qtd": 1,
+                "nome": "BISC RECH TRELOSO 120G CHOCOR BAUN",
+                "valor": 1.99
+            },
+            {
+                "qtd": 1,
+                "nome": "DESOD AER DOVE 150ML CLEAN COMFORT",
+                "valor": 16.99
+            }
+        ]
+    },
+    {
+        "data": "2026-03-07 19:57:24",
+        "mercado": "MEGA ATACAREJO - VALENTINA",
+        "chave_acesso": "25260340709574000158652530000885161813714966",
+        "produtos": [
+            {
+                "qtd": 1,
+                "nome": "LEITE PO BETANIA PCT 200G INTEGRAL",
+                "valor": 6.39
+            },
+            {
+                "qtd": 0.118,
+                "nome": "QUEIJO CHEDDAR kg",
+                "valor": 54.915254237288146
+            },
+            {
+                "qtd": 1,
+                "nome": "BEB LACT DAMARE 200ML CHOC",
+                "valor": 1.19
+            },
+            {
+                "qtd": 1,
+                "nome": "BISC RECH RICHESTER 125G MORANGO",
+                "valor": 2.69
+            },
+            {
+                "qtd": 5,
+                "nome": "HAMBURGUER JUNDIAI 56G MISTO",
+                "valor": 0.79
+            },
+            {
+                "qtd": 1,
+                "nome": "DESOD CR ANT ABOVE 50G SPORT",
+                "valor": 4.29
+            },
+            {
+                "qtd": 1,
+                "nome": "MOLHO TOMATE QUERO SCH 240G TRAD",
+                "valor": 2.29
+            },
+            {
+                "qtd": 1,
+                "nome": "ACHOC PO MARATA SCH 200G",
+                "valor": 4.29
+            },
+            {
+                "qtd": 1,
+                "nome": "LEITE PO BETANIA PCT 200G INTEGRAL",
+                "valor": 6.39
+            },
+            {
+                "qtd": 1,
+                "nome": "AMIDO MILHO KIMIMO 200G",
+                "valor": 3.99
+            },
+            {
+                "qtd": 1,
+                "nome": "AVEIA FARINHA QUAKER CX 165G",
+                "valor": 4.59
+            },
+            {
+                "qtd": 1,
+                "nome": "AVEIA FARINHA QUAKER CX 165G",
+                "valor": 4.59
+            },
+            {
+                "qtd": 3,
+                "nome": "LEITE UHT NATVILLE 1L INT",
+                "valor": 5.22
+            },
+            {
+                "qtd": 1,
+                "nome": "SALGAD PIPPOS 75G MILHO",
+                "valor": 3.59
+            },
+            {
+                "qtd": 1,
+                "nome": "ACHOC PO MARATA SCH 200G",
+                "valor": 4.29
+            },
+            {
+                "qtd": 1,
+                "nome": "BISC TORTINHA MARILAN 300G LIMAO",
+                "valor": 8.99
+            },
+            {
+                "qtd": 1,
+                "nome": "BEB LACT PIRAKIDS 200ML CHOCOLATE",
+                "valor": 1.29
+            },
+            {
+                "qtd": 1,
+                "nome": "TORRADA PANVEIGA 150G CEBOLA",
+                "valor": 5.99
+            },
+            {
+                "qtd": 0.18,
+                "nome": "QUEIJO CHEDDAR kg",
+                "valor": 54.88888888888889
+            },
+            {
+                "qtd": 1,
+                "nome": "SOBRECOXA FGO BOM TODO BD 1kg",
+                "valor": 14.99
+            },
+            {
+                "qtd": 4,
+                "nome": "STEAK NOBRE 100G FRANGO",
+                "valor": 1.79
+            },
+            {
+                "qtd": 4,
+                "nome": "HAMBURGUER JUNDIAI 56G MISTO",
+                "valor": 0.79
+            },
+            {
+                "qtd": 1,
+                "nome": "SUCO INT TRADINE PET 1,35L UVA",
+                "valor": 12.99
+            },
+            {
+                "qtd": 1.025,
+                "nome": "LARANJA PERA kg",
+                "valor": 2.7902439024390246
+            },
+            {
+                "qtd": 0.99,
+                "nome": "BETERRABA kg",
+                "valor": 7.494949494949495
+            },
+            {
+                "qtd": 0.9,
+                "nome": "BANANA PRATA kg",
+                "valor": 5.488888888888889
+            },
+            {
+                "qtd": 0.405,
+                "nome": "CENOURA kg",
+                "valor": 6.6913580246913575
+            },
+            {
+                "qtd": 1,
+                "nome": "OVOS CAIPIRA AVINE GD C 10",
+                "valor": 10.49
+            },
+            {
+                "qtd": 0.324,
+                "nome": "PAO DELICIA C. REQUEIJAO kg",
+                "valor": 30
+            }
+        ]
+    }
+]

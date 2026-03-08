@@ -135,7 +135,7 @@
 
                 let span_qtd_element = document.createElement('span')
                 span_qtd_element.classList = 'input-group-text border-0 rounded-0'
-                span_qtd_element.textContent = produto['qtd']
+                span_qtd_element.textContent = produto['qtd'].toFixed(1)
                 
                 let span_produto_element = document.createElement('span')
                 span_produto_element.classList = 'input-group-text text-start border-0 rounded-0 w-75'
